@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:memorizer_flutter/screens/player_screen.dart';
+import 'package:memorizer_flutter/server/server_provider.dart';
+import 'package:memorizer_flutter/theme.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
-  static const textBoxColor = Color(0xFFF6F2FA);
-  static const mainButtonColor = Color(0xFF6750A4);
-  static const smallButtonColor = Color(0xFFEADDFF);
+  static const routeName = "/mainscreen";
   const MainScreen({Key? key}) : super(key: key);
 
   @override
@@ -12,6 +14,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
+  final _textController = TextEditingController();
   bool _showBackButton = false;
 
   void onTextPress() {
@@ -20,12 +23,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
     });
   }
 
-  @overr
+  @override
   Widget build(BuildContext context) {
+    final serverProvider = Provider.of<ServerProvider>(context, listen: false);
     MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MainScreen.textBoxColor,
+        backgroundColor: kTextBoxColor,
         elevation: 0,
         centerTitle: true,
         title: AnimatedOpacity(
@@ -34,7 +38,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
           child: const Text(
             "Memorizer",
             style: TextStyle(
-              color: MainScreen.mainButtonColor,
+              color: kMainButtonColor,
               fontSize: 25,
             ),
           ),
@@ -50,8 +54,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
               _focusNode.unfocus();
             },
             icon: const Icon(
-              Icons.chevron_left,
-              color: MainScreen.mainButtonColor,
+              Icons.arrow_back,
+              color: kMainButtonColor,
               size: 30,
             ),
           ),
@@ -68,7 +72,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
-                color: MainScreen.textBoxColor,
+                color: kTextBoxColor,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -83,6 +87,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   maxLines: 100,
                   focusNode: _focusNode,
                   onTap: onTextPress,
+                  controller: _textController,
                 ),
               ),
             ),
@@ -98,13 +103,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   children: [
                     const SizedBox(height: 10),
                     CircleAvatar(
-                      backgroundColor: MainScreen.smallButtonColor,
+                      backgroundColor: kSmallButtonColor,
                       radius: 30,
                       child: IconButton(
                         onPressed: () {},
                         icon: const Icon(
                           Icons.upload_file,
-                          color: MainScreen.mainButtonColor,
+                          color: kMainButtonColor,
                         ),
                       ),
                     ),
@@ -124,13 +129,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   children: [
                     const SizedBox(height: 10),
                     CircleAvatar(
-                      backgroundColor: MainScreen.mainButtonColor,
+                      backgroundColor: kMainButtonColor,
                       radius: 30,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(PlayerScreen.routeName);
+                          serverProvider.postText(text: _textController.text);
+                        },
                         icon: const Icon(
                           Icons.play_arrow,
-                          color: MainScreen.smallButtonColor,
+                          color: kSmallButtonColor,
                         ),
                       ),
                     ),
@@ -150,13 +158,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                   children: [
                     const SizedBox(height: 10),
                     CircleAvatar(
-                      backgroundColor: MainScreen.smallButtonColor,
+                      backgroundColor: kSmallButtonColor,
                       radius: 30,
                       child: IconButton(
                         onPressed: () {},
                         icon: const Icon(
                           Icons.settings,
-                          color: MainScreen.mainButtonColor,
+                          color: kMainButtonColor,
                         ),
                       ),
                     ),
