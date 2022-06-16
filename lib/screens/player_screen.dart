@@ -3,12 +3,20 @@ import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
 
-class PlayerScreen extends StatelessWidget {
+class PlayerScreen extends StatefulWidget {
   static const routeName = "/playerscreen";
   const PlayerScreen({Key? key}) : super(key: key);
 
   @override
+  State<PlayerScreen> createState() => _PlayerScreenState();
+}
+
+class _PlayerScreenState extends State<PlayerScreen> {
+  int _currentLine = 1;
+  @override
   Widget build(BuildContext context) {
+    final serverProvider = Provider.of<ServerProvider>(context);
+    final lines = serverProvider.results;
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
@@ -18,44 +26,58 @@ class PlayerScreen extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
               // ignore: avoid_print
-              onPressed: () => print('Go back'),
+              onPressed: () => Navigator.of(context).pop(),
               icon: Icon(Icons.arrow_back, color: Color(0xff6750a4))),
         ),
         body: Column(children: [
           Container(
-              alignment: Alignment.center,
-              // ignore: todo
-              //TODO: Connect with the screen (precentages)
-              width: MediaQuery.of(context).size.width * 0.95,
-              height: MediaQuery.of(context).size.height * 0.63,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF6F2FA),
-                border: Border.all(color: const Color(0xFFF6F2FA)),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-              ),
-              child: Column(children: [
-                Container(
-                    margin: const EdgeInsets.only(top: 150),
-                    child: Column(children: [
-                      const Text(
-                        "Oh, I hope some day I'll make it out of here. Even if it takes all night or a hundred years",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
+            alignment: Alignment.center,
+            // ignore: todo
+            //TODO: Connect with the screen (precentages)
+            width: MediaQuery.of(context).size.width * 0.95,
+            height: MediaQuery.of(context).size.height * 0.63,
+            decoration: BoxDecoration(
+              color: const Color(0xFFF6F2FA),
+              border: Border.all(color: const Color(0xFFF6F2FA)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                      child: Column(children: [
+                    for (var index = 0; index < lines.length; ++index)
+                      if (_currentLine - 1 == index)
+                        Text(
+                          lines[index],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      else
+                        Text(
+                          lines[index],
+                          style: const TextStyle(
+                            fontSize: 24,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.only(top: 70),
-                          child: const Text(
-                            "Need a place to hide, but I can't find one near. Wanna feel alive, outside I can't fight my fear",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 24,
-                            ),
-                          ))
-                    ]))
-              ])),
+                    // Padding(
+                    //     padding: const EdgeInsets.only(top: 70),
+                    //     child: const Text(
+                    //       "Need a place to hide, but I can't find one near. Wanna feel alive, outside I can't fight my fear",
+                    //       textAlign: TextAlign.center,
+                    //       style: TextStyle(
+                    //         fontSize: 24,
+                    //       ),
+                    //     ))
+                  ]))
+                ],
+              ),
+            ),
+          ),
           Padding(
               padding: const EdgeInsets.only(top: 15),
               child: Row(
@@ -63,7 +85,13 @@ class PlayerScreen extends StatelessWidget {
                 children: [
                   IconButton(
                       // ignore: avoid_print
-                      onPressed: (() => print('Left button pressed')),
+                      onPressed: () {
+                        if (_currentLine > 1) {
+                          setState(() {
+                            _currentLine--;
+                          });
+                        }
+                      },
                       icon: Icon(Icons.keyboard_double_arrow_left),
                       color: Color(0xff4f378b),
                       iconSize: 50),
@@ -75,7 +103,13 @@ class PlayerScreen extends StatelessWidget {
                       iconSize: 50),
                   IconButton(
                       // ignore: avoid_print
-                      onPressed: (() => print('Right button pressed')),
+                      onPressed: () {
+                        if (_currentLine < lines.length) {
+                          setState(() {
+                            _currentLine++;
+                          });
+                        }
+                      },
                       icon: Icon(Icons.keyboard_double_arrow_right),
                       color: Color(0xff4f378b),
                       iconSize: 50)
