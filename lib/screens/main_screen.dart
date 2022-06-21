@@ -18,6 +18,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
   final _textController = TextEditingController();
   //String? pdf;
+  bool isPDF = false;
   bool _showBackButton = false;
 
   void onTextPress() {
@@ -116,6 +117,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         onPressed: () {
                           // TODO : upload PDF
                           pdfProvider.pickPDFText();
+                          isPDF = true;
+                          print(isPDF);
                           print("upload PDF");
                         },
                         icon: const Icon(
@@ -146,8 +149,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(PlayerScreen.routeName);
-                          print(_textController.text);
-                          serverProvider.postText(text: _textController.text);
+                          //print(_textController.text);
+                          print(isPDF);
+                          serverProvider.postText(
+                              text: _textController.text, isPDF: isPDF);
+                          isPDF = false;
                         },
                         icon: const Icon(
                           Icons.play_arrow,
