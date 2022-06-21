@@ -113,7 +113,6 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           // TODO : upload PDF
                           var access = PdfProvider();
                           access.pickPDFText();
-                          print(access.PDF);
                           pdf = access.PDF;
                           setState(() {});
                           print("upload PDF");
