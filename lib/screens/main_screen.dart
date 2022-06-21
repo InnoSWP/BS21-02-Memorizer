@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/screens/player_screen.dart';
+import 'package:memorizer_flutter/server/pdf_parser.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf_text/pdf_text.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = "/mainscreen";
@@ -15,6 +17,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
   final _textController = TextEditingController();
+  String? pdf;
   bool _showBackButton = false;
 
   void onTextPress() {
@@ -106,7 +109,15 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       backgroundColor: kSmallButtonColor,
                       radius: 30,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // TODO : upload PDF
+                          var access = PdfProvider();
+                          access.pickPDFText();
+                          print(access.PDF);
+                          pdf = access.PDF;
+                          setState(() {});
+                          print("upload PDF");
+                        },
                         icon: const Icon(
                           Icons.upload_file,
                           color: kMainButtonColor,
@@ -133,8 +144,16 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       radius: 30,
                       child: IconButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(PlayerScreen.routeName);
-                          serverProvider.postText(text: _textController.text);
+                          Navigator.of(context)
+                              .pushNamed(PlayerScreen.routeName);
+                          //serverProvider.postText(text: _textController.text);
+                          if (pdf != null) {
+                            var pdfProvider = PdfProvider();
+                            pdfProvider.postPDF(doc: pdf);
+                            pdf = null;
+                          } else {
+                            serverProvider.postText(text: _textController.text);
+                          }
                         },
                         icon: const Icon(
                           Icons.play_arrow,
