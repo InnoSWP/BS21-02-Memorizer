@@ -29,6 +29,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final serverProvider = Provider.of<ServerProvider>(context, listen: false);
+    final pdfProvider = Provider.of<PdfProvider>(context);
+    if (pdfProvider.PDF.length > 0) {
+      _textController.text = pdfProvider.PDF;
+    }
     MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       appBar: AppBar(
@@ -111,11 +115,7 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       child: IconButton(
                         onPressed: () {
                           // TODO : upload PDF
-                          var access = PdfProvider();
-                          access.pickPDFText();
-                          print(access.PDF);
-                          pdf = access.PDF;
-                          setState(() {});
+                          pdfProvider.pickPDFText();
                           print("upload PDF");
                         },
                         icon: const Icon(
