@@ -17,7 +17,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
   final _textController = TextEditingController();
-  String? pdf;
+  //String? pdf;
   bool _showBackButton = false;
 
   void onTextPress() {
@@ -146,14 +146,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                         onPressed: () {
                           Navigator.of(context)
                               .pushNamed(PlayerScreen.routeName);
-                          //serverProvider.postText(text: _textController.text);
-                          if (pdf != null) {
-                            var pdfProvider = PdfProvider();
-                            pdfProvider.postPDF(doc: pdf);
-                            pdf = null;
-                          } else {
-                            serverProvider.postText(text: _textController.text);
-                          }
+                          print(_textController.text);
+                          serverProvider.postText(text: _textController.text);
                         },
                         icon: const Icon(
                           Icons.play_arrow,
