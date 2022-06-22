@@ -46,5 +46,5 @@ class PdfProvider extends ChangeNotifier {
   }
 
   List<String> get results => _results;
-  //String get myPDF => PDF;
+  String get myPDF => PDF;
 }
