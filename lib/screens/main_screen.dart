@@ -71,21 +71,20 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         actions: [
           AnimatedOpacity(
-            duration: const Duration(milliseconds: 100),
-            opacity: _showBackButton ? 1.0 : 0.0,
-            child: IconButton(
-              onPressed: () {
-                setState(() {
-                  _textController.text = '';
-                });
-              },
-              icon: const Icon(
-                Icons.close,
-                color: kMainButtonColor,
-                size: 30,
-              ),
-            )
-          ),
+              duration: const Duration(milliseconds: 100),
+              opacity: _showBackButton ? 1.0 : 0.0,
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _textController.text = '';
+                  });
+                },
+                icon: const Icon(
+                  Icons.close,
+                  color: kMainButtonColor,
+                  size: 30,
+                ),
+              )),
         ],
       ),
       backgroundColor: Colors.white,
@@ -171,7 +170,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                           //print(_textController.text);
                           print(isPDF);
                           serverProvider.postText(
-                              text: _textController.text, isPDF: isPDF);
+                              text: _textController.text, flagPDF: isPDF);
+                          _focusNode.unfocus();
                           isPDF = false;
                         },
                         icon: const Icon(
