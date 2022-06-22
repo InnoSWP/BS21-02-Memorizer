@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 class PdfProvider extends ChangeNotifier {
   final List<String> _results = [];
   String PDF = "";
+  bool loaded = false;
   PdfProvider();
 
   void postPDF({required String? doc}) async {
@@ -39,6 +40,7 @@ class PdfProvider extends ChangeNotifier {
     if (filePickerResult != null) {
       var pdfDoc = await PDFDoc.fromPath(filePickerResult.files.single.path!);
       PDF = await pdfDoc.text;
+      loaded = true;
       notifyListeners();
     }
   }

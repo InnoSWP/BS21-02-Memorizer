@@ -30,8 +30,9 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final serverProvider = Provider.of<ServerProvider>(context, listen: false);
     final pdfProvider = Provider.of<PdfProvider>(context);
-    if (pdfProvider.PDF.length > 0) {
+    if (pdfProvider.PDF.length > 0 && pdfProvider.loaded) {
       _textController.text = pdfProvider.PDF;
+      pdfProvider.loaded = false;
     }
     MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
@@ -67,6 +68,24 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             ),
           ),
         ),
+        actions: [
+          AnimatedOpacity(
+            duration: const Duration(milliseconds: 100),
+            opacity: _showBackButton ? 1.0 : 0.0,
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  _textController.text = '';
+                });
+              },
+              icon: const Icon(
+                Icons.close,
+                color: kMainButtonColor,
+                size: 30,
+              ),
+            )
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Column(
