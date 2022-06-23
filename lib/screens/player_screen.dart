@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class PlayerScreen extends StatefulWidget {
   static const routeName = "/playerscreen";
@@ -12,8 +13,12 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  int _currentLine = 1;
+  final itemController = ItemScrollController();
+  int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
+
+  void scrollToIndex(int index) => itemController.scrollTo(
+      index: index, duration: Duration(milliseconds: 500));
 
   @override
   Widget build(BuildContext context) {
@@ -33,43 +38,42 @@ class _PlayerScreenState extends State<PlayerScreen> {
               icon: Icon(Icons.arrow_back, color: Color(0xff6750a4))),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Ink(
-                  decoration: const ShapeDecoration(
-                    color: Color(0xffeaddff),
-                    shape: CircleBorder(),
-                  ),
-                  child: IconButton(
-                      onPressed: () => print("repeat"),
-                      icon: Icon(Icons.repeat),
-                      color: Color(0xff6750a4),
-                      iconSize: 30)),
-              Ink(
-                  decoration: const ShapeDecoration(
-                    color: Color(0xff6750a4),
-                    shape: CircleBorder(),
-                  ),
-                  child: IconButton(
-                      onPressed: () => print("Voice commands"),
-                      icon: Icon(Icons.mic_none),
-                      color: Color(0xffeaddff),
-                      iconSize: 40)),
-              Padding(
-                  padding: const EdgeInsets.only(left: 0),
-                  child: Ink(
-                    decoration: const ShapeDecoration(
-                      color: Color(0xffeaddff),
-                      shape: CircleBorder(),
-                    ),
-                    child: IconButton(
-                        onPressed: () => print("Settings"),
-                        icon: Icon(Icons.settings),
-                        color: Color(0xff4f378b),
-                        iconSize: 30),
-                  ))
-            ]),
+        floatingActionButton:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Ink(
+              decoration: const ShapeDecoration(
+                color: Color(0xffeaddff),
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                  onPressed: () => print("repeat"),
+                  icon: Icon(Icons.repeat),
+                  color: Color(0xff6750a4),
+                  iconSize: 30)),
+          Ink(
+              decoration: const ShapeDecoration(
+                color: Color(0xff6750a4),
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                  onPressed: () => print("Voice commands"),
+                  icon: Icon(Icons.mic_none),
+                  color: Color(0xffeaddff),
+                  iconSize: 40)),
+          Padding(
+              padding: const EdgeInsets.only(left: 0),
+              child: Ink(
+                decoration: const ShapeDecoration(
+                  color: Color(0xffeaddff),
+                  shape: CircleBorder(),
+                ),
+                child: IconButton(
+                    onPressed: () => print("Settings"),
+                    icon: Icon(Icons.settings),
+                    color: Color(0xff4f378b),
+                    iconSize: 30),
+              ))
+        ]),
         body: Column(children: [
           Container(
             alignment: Alignment.center,
@@ -82,39 +86,20 @@ class _PlayerScreenState extends State<PlayerScreen> {
               border: Border.all(color: const Color(0xFFF6F2FA)),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
-            child: ListView(
-              children: [
-                Container(
-                  height: size.height * 0.25,
-                ),
-                Container(
-                  child: Text(
-                    lines[_currentLine], // add text from the array,
-                    textAlign: TextAlign.center,
-                    // overflow: TextOverflow.ellipsis,
-                    // maxLines: 2,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                    ),
-                  ),
-                ),
-                Container(
-                  height: size.height * 0.15,
-                ),
-                Container(
-                  child: Text(
-                    _currentLine + 1 < lines.length ? lines[_currentLine + 1] : "",
-                    // add text from the array,
-                    textAlign: TextAlign.center,
-                    // overflow: TextOverflow.ellipsis,
-                    // maxLines: 2,
-                    style: const TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-              ],
+            child: ScrollablePositionedList.builder(
+              itemCount: lines.length,
+              itemScrollController: itemController,
+              itemBuilder: (context, index) {
+                return listElementToScreen(lines, size, index);
+              },
+
+              // children: [
+              //   for (int i = 0; i < lines.length; i++)
+              //     listElementToScreen(lines, size, i),
+              //   Container(
+              //     height: size.height * 0.1,
+              //   ),
+              // ],
             ),
           ),
 
@@ -165,9 +150,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     child: IconButton(
                         // ignore: avoid_print
                         onPressed: () {
-                          if (_currentLine > 1) {
+                          if (_currentLine >= 1) {
                             setState(() {
                               _currentLine--;
+                              scrollToIndex(_currentLine);
                             });
                           }
                         },
@@ -179,11 +165,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       // ignore: avoid_print
                       onPressed: (() {
                         setState(() {
-
-
-
-
-
                           if (iconMain.icon == Icons.play_arrow) {
                             iconMain = Icon(Icons.pause);
                           } else {
@@ -199,9 +180,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       onPressed: () {
                         if (_currentLine < lines.length - 1) {
                           setState(() {
-                            print(_currentLine);
-                            print(lines.length);
                             _currentLine++;
+                            scrollToIndex(_currentLine);
                           });
                         }
                       },
@@ -250,5 +230,63 @@ class _PlayerScreenState extends State<PlayerScreen> {
           //               ))
           //         ]))
         ]));
+  }
+
+  Widget listElementToScreen(var list, var sizeOfScreen, var index) {
+    // return Container(
+    //   margin: EdgeInsets.only(bottom: sizeOfScreen.height * 0.15),
+    //   child: Text(
+    //     list[index], // add text from the array,
+    //     textAlign: TextAlign.center,
+    //     // overflow: TextOverflow.ellipsis,
+    //     // maxLines: 2,
+    //     style: const TextStyle(
+    //       fontSize: 32,
+    //     ),
+    //   ),
+    // );
+    var el;
+    if (index != list.length - 1) {
+      el = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: sizeOfScreen.height * 0.25,
+          ),
+          Text(
+            list[index], // add text from the array,
+            textAlign: TextAlign.center,
+            // overflow: TextOverflow.ellipsis,
+            // maxLines: 2,
+            style: const TextStyle(
+              fontSize: 36
+            ),
+          ),
+        ],
+      );
+    } else {
+      el = Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+
+            height: sizeOfScreen.height * 0.25,
+          ),
+          Text(
+              list[index], // add text from the array,
+              textAlign: TextAlign.center,
+              // overflow: TextOverflow.ellipsis,
+              // maxLines: 2,
+              style: const TextStyle(
+                fontSize: 36,
+              ),
+            ),
+          Container(
+            height: sizeOfScreen.height * 0.25,
+          ),
+        ],
+      );
+    }
+    return el;
   }
 }
