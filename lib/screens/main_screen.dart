@@ -133,8 +133,10 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       radius: 30,
                       child: IconButton(
                         onPressed: () {
+                          _focusNode.unfocus();
                           serverProvider.postText(text: _textController.text);
-                          Navigator.of(context).pushNamed(PlayerScreen.routeName);
+                          Navigator.of(context)
+                              .pushNamed(PlayerScreen.routeName);
                         },
                         icon: const Icon(
                           Icons.play_arrow,
