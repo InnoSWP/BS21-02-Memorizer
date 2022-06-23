@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class ServerProvider extends ChangeNotifier {
   List<String> _results = [];
   ServerProvider();
-
+  
   void postText({required String text, required bool flagPDF}) async {
     _results = [];
     String req = "";
@@ -34,7 +34,7 @@ class ServerProvider extends ChangeNotifier {
         },
         body: jsonEncode({"text": sample}));
     if (response.statusCode == 200) {
-      print("Connecting to API");
+      print("s to API");
       final body = json.decode(response.body) as List;
       print(body);
       body.forEach((json) {
