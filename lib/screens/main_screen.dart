@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/screens/player_screen.dart';
+import 'package:memorizer_flutter/server/pdf_parser.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:pdf_text/pdf_text.dart';
 
 class MainScreen extends StatefulWidget {
   static const routeName = "/mainscreen";
@@ -15,6 +17,8 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   final _focusNode = FocusNode();
   final _textController = TextEditingController();
+  //String? pdf;
+  bool isPDF = false;
   bool _showBackButton = false;
 
   void onTextPress() {
@@ -26,6 +30,11 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final serverProvider = Provider.of<ServerProvider>(context, listen: false);
+    final pdfProvider = Provider.of<PdfProvider>(context);
+    if (pdfProvider.PDF.length > 0 && pdfProvider.loaded) {
+      _textController.text = pdfProvider.PDF;
+      pdfProvider.loaded = false;
+    }
     MediaQuery.of(context).viewInsets.bottom;
     return Scaffold(
       appBar: AppBar(
@@ -60,6 +69,23 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
             ),
           ),
         ),
+        actions: [
+          AnimatedOpacity(
+              duration: const Duration(milliseconds: 100),
+              opacity: _showBackButton ? 1.0 : 0.0,
+              child: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _textController.text = '';
+                  });
+                },
+                icon: const Icon(
+                  Icons.close,
+                  color: kMainButtonColor,
+                  size: 30,
+                ),
+              )),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -106,7 +132,13 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       backgroundColor: kSmallButtonColor,
                       radius: 30,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // TODO : upload PDF
+                          pdfProvider.pickPDFText();
+                          isPDF = true;
+                          print(isPDF);
+                          print("upload PDF");
+                        },
                         icon: const Icon(
                           Icons.upload_file,
                           color: kMainButtonColor,
@@ -133,10 +165,14 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       radius: 30,
                       child: IconButton(
                         onPressed: () {
-                          _focusNode.unfocus();
-                          serverProvider.postText(text: _textController.text);
                           Navigator.of(context)
                               .pushNamed(PlayerScreen.routeName);
+                          //print(_textController.text);
+                          print(isPDF);
+                          serverProvider.postText(
+                              text: _textController.text, flagPDF: isPDF);
+                          _focusNode.unfocus();
+                          isPDF = false;
                         },
                         icon: const Icon(
                           Icons.play_arrow,
