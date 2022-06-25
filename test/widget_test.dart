@@ -11,20 +11,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:memorizer_flutter/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Show back button on text field press test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Tap the text field to enable edit mode.
+    await tester.tap(find.byKey(const ValueKey("textField")));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the back arrow has appeared on screen.
+    expect(find.byIcon(Icons.arrow_back), findsOneWidget);
   });
+
+  testWidgets('Show new screen on play button press test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    // Tap the play icon to go to the next screen.
+    await tester.tap(find.byIcon(Icons.play_arrow));
+    await tester.pump();
+
+    // Verify that the repeat button has appeared on screen.
+    // (means that a new screen was pushed)
+    expect(find.byIcon(Icons.play_arrow), findsOneWidget);
+  });
+
 }
