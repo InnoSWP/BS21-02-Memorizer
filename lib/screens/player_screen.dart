@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class PlayerScreen extends StatefulWidget {
   static const routeName = "/playerscreen";
@@ -12,10 +13,13 @@ class PlayerScreen extends StatefulWidget {
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
 
+// enum TtsState { playing, stopped, paused, continued }
+
 class _PlayerScreenState extends State<PlayerScreen> {
   final itemController = ItemScrollController();
   int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
+  FlutterTts flutterTts = FlutterTts();
 
   void scrollToIndex(int index) => itemController.scrollTo(
       index: index, duration: Duration(milliseconds: 500));
@@ -34,7 +38,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
           elevation: 0,
           leading: IconButton(
               // ignore: avoid_print
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                stopText();
+                Navigator.of(context).pop();
+              },
               icon: Icon(Icons.arrow_back, color: Color(0xff6750a4))),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -46,7 +53,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 shape: CircleBorder(),
               ),
               child: IconButton(
-                  onPressed: () => print("repeat"),
+                  onPressed: () {
+                    print("repeat");
+                    stopText();
+                    speakText(lines[_currentLine]);
+                  },
                   icon: Icon(Icons.repeat),
                   color: Color(0xff6750a4),
                   iconSize: 30)),
@@ -151,6 +162,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         // ignore: avoid_print
                         onPressed: () {
                           if (_currentLine >= 1) {
+                            speakText(lines[_currentLine - 1]);
                             setState(() {
                               _currentLine--;
                               scrollToIndex(_currentLine);
@@ -167,8 +179,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         setState(() {
                           if (iconMain.icon == Icons.play_arrow) {
                             iconMain = Icon(Icons.pause);
+                            speakText(lines[_currentLine]);
                           } else {
                             iconMain = Icon(Icons.play_arrow);
+                            stopText();
                           }
                         });
                       }),
@@ -179,6 +193,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       // ignore: avoid_print
                       onPressed: () {
                         if (_currentLine < lines.length - 1) {
+                          speakText(lines[_currentLine + 1]);
                           setState(() {
                             _currentLine++;
                             scrollToIndex(_currentLine);
@@ -258,35 +273,44 @@ class _PlayerScreenState extends State<PlayerScreen> {
             textAlign: TextAlign.center,
             // overflow: TextOverflow.ellipsis,
             // maxLines: 2,
-            style: const TextStyle(
-              fontSize: 36
-            ),
+            style: const TextStyle(fontSize: 36),
           ),
         ],
       );
+      //print(list[index]);
+      //speakText(list[index]);
     } else {
       el = Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-
             height: sizeOfScreen.height * 0.25,
           ),
           Text(
-              list[index], // add text from the array,
-              textAlign: TextAlign.center,
-              // overflow: TextOverflow.ellipsis,
-              // maxLines: 2,
-              style: const TextStyle(
-                fontSize: 36,
-              ),
+            list[index], // add text from the array,
+            textAlign: TextAlign.center,
+            // overflow: TextOverflow.ellipsis,
+            // maxLines: 2,
+            style: const TextStyle(
+              fontSize: 36,
             ),
+          ),
           Container(
             height: sizeOfScreen.height * 0.25,
           ),
         ],
       );
+      //print(list[index]);
+      //speakText(list[index]);
     }
     return el;
+  }
+
+  Future speakText(var text) async {
+    await flutterTts.speak(text);
+  }
+
+  Future stopText() async {
+    await flutterTts.stop();
   }
 }
