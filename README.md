@@ -18,5 +18,7 @@ Memorize any text quickly and easily by voice!
 |      Listen the text     |     ✅     |
 |      Repeat the sentance |     ✅     |
 ## Getting Started
-
-
+1. Set up our app
+2. Enter the text or upload PDF
+3. Start memorize
+4. Enjoy
