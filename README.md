@@ -8,12 +8,12 @@ Memorize any text quickly and easily by voice!
 ## How to use
 - to be provided later
 ## Features
-|      Feature      | supported |
+|      Features list       | supported   |
 |:-----------------:|:---------:|
-|      Upload PDF      |     ✅     |
-|      Enter the text  |     ✅     |
-|        Something else  |     ✅     |
-| Internet Explorer |     ❌     |
+|      Upload PDF          |     ✅     |
+|      Enter the text      |     ✅     |
+|      Listen the text     |     ✅     |
+|      Repeat the sentance |     ❌     |
 ## Getting Started
 
 
