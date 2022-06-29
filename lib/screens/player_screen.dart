@@ -70,7 +70,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   onPressed: () => print("Voice commands"),
                   icon: Icon(Icons.mic_none),
                   color: Color(0xffeaddff),
-                  iconSize: 40)),
+                  iconSize: 30)),
           Padding(
               padding: const EdgeInsets.only(left: 0),
               child: Ink(
@@ -87,22 +87,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
         ]),
         body: Column(children: [
           Container(
-            alignment: Alignment.center,
-            // ignore: todo
-            //TODO: Connect with the screen (precentages)
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.63,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF6F2FA),
-              border: Border.all(color: const Color(0xFFF6F2FA)),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: ScrollablePositionedList.builder(
-              itemCount: lines.length,
-              itemScrollController: itemController,
-              itemBuilder: (context, index) {
-                return listElementToScreen(lines, size, index);
-              },
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 0.95,
+              height: MediaQuery.of(context).size.height * 0.63,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF6F2FA),
+                border: Border.all(color: const Color(0xFFF6F2FA)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: PageView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  for (int i = 0; i < lines.length; i++)
+                    listElementToScreen(lines, size, i)
+                ],
+              )
 
               // children: [
               //   for (int i = 0; i < lines.length; i++)
@@ -111,8 +110,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               //     height: size.height * 0.1,
               //   ),
               // ],
-            ),
-          ),
+              ),
 
           // child: SingleChildScrollView(
           //   child: Column(
@@ -260,50 +258,49 @@ class _PlayerScreenState extends State<PlayerScreen> {
     //     ),
     //   ),
     // );
-    var el;
-    if (index != list.length - 1) {
-      el = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-          Text(
-            list[index], // add text from the array,
-            textAlign: TextAlign.center,
-            // overflow: TextOverflow.ellipsis,
-            // maxLines: 2,
-            style: const TextStyle(fontSize: 36),
-          ),
-        ],
-      );
-      //print(list[index]);
-      //speakText(list[index]);
-    } else {
-      el = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-          Text(
-            list[index], // add text from the array,
-            textAlign: TextAlign.center,
-            // overflow: TextOverflow.ellipsis,
-            // maxLines: 2,
-            style: const TextStyle(
-              fontSize: 36,
-            ),
-          ),
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-        ],
-      );
-      //print(list[index]);
-      //speakText(list[index]);
-    }
-    return el;
+    // var el;
+    // if (index != list.length - 1) {
+    //   el = Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    return Text(
+      list[index], // add text from the array,
+      textAlign: TextAlign.center,
+      // overflow: TextOverflow.ellipsis,
+      // maxLines: 2,
+      style: const TextStyle(fontSize: 36),
+    );
+    //   // );
+    //   //print(list[index]);
+    //   //speakText(list[index]);
+    // } else {
+    //   el = Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    //       Text(
+    //         list[index], // add text from the array,
+    //         textAlign: TextAlign.center,
+    //         // overflow: TextOverflow.ellipsis,
+    //         // maxLines: 2,
+    //         style: const TextStyle(
+    //           fontSize: 36,
+    //         ),
+    //       ),
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    //     ],
+    //   );
+    //   //print(list[index]);
+    //   //speakText(list[index]);
+    // }
+    // return el;
   }
 
   Future speakText(var text) async {
