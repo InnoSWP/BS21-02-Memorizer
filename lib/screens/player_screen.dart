@@ -3,6 +3,7 @@ import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:memorizer_flutter/voiceCommands/voice_manager.dart';
 
 class PlayerScreen extends StatefulWidget {
   static const routeName = "/playerscreen";
@@ -20,7 +21,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
   int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
   FlutterTts flutterTts = FlutterTts();
-
+  voiceControl voiceController = voiceControl();
+  bool voiceMod = false;
   void scrollToIndex(int index) => itemController.scrollTo(
       index: index, duration: Duration(milliseconds: 500));
 
@@ -67,7 +69,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 shape: CircleBorder(),
               ),
               child: IconButton(
-                  onPressed: () => print("Voice commands"),
+                  onPressed: () {
+                    voiceController.initPicovoice();
+
+                    print("Voice commands");
+                  },
                   icon: Icon(Icons.mic_none),
                   color: Color(0xffeaddff),
                   iconSize: 40)),
