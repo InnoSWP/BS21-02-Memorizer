@@ -4,6 +4,8 @@ Memorize any text quickly and easily by voice!
 
 ## Demo
 ### The Main screen
+![image](https://user-images.githubusercontent.com/84839431/176419407-9469db31-321c-4fb4-9c38-5e6efe85ea31.png)
+
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/DwGTBJQ/image-2022-06-27-14-49-37.png" alt="image-2022-06-27-14-49-37" width="30%"></a>
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/rZLR7cY/image-2022-06-27-14-50-08.png" alt="image-2022-06-27-14-50-08" width="30%"></a>
 ### The Player screen
