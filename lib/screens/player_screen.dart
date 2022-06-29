@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memorizer_flutter/screens/player_settings_screen.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -79,7 +80,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   shape: CircleBorder(),
                 ),
                 child: IconButton(
-                    onPressed: () => print("Settings"),
+                    onPressed: () => Navigator.of(context).pushNamed(PlayerSettingsScreen.routeName),
                     icon: Icon(Icons.settings),
                     color: Color(0xff4f378b),
                     iconSize: 30),
