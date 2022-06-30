@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
+import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -52,15 +53,18 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 color: Color(0xffeaddff),
                 shape: CircleBorder(),
               ),
-              child: IconButton(
-                  onPressed: () {
-                    print("repeat");
-                    stopText();
-                    speakText(lines[_currentLine]);
-                  },
-                  icon: Icon(Icons.repeat),
-                  color: Color(0xff6750a4),
-                  iconSize: 30)),
+              child: CircleAvatar(
+                  backgroundColor: kSmallButtonColor,
+                  radius: 30,
+                  child: IconButton(
+                      onPressed: () {
+                        print("repeat");
+                        stopText();
+                        speakText(lines[_currentLine]);
+                      },
+                      icon: Icon(Icons.repeat),
+                      color: Color(0xff6750a4),
+                      iconSize: 30))),
           Ink(
               decoration: const ShapeDecoration(
                 color: Color(0xff6750a4),
@@ -74,16 +78,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
           Padding(
               padding: const EdgeInsets.only(left: 0),
               child: Ink(
-                decoration: const ShapeDecoration(
-                  color: Color(0xffeaddff),
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                    onPressed: () => print("Settings"),
-                    icon: Icon(Icons.settings),
-                    color: Color(0xff4f378b),
-                    iconSize: 30),
-              ))
+                  decoration: const ShapeDecoration(
+                    color: Color(0xffeaddff),
+                    shape: CircleBorder(),
+                  ),
+                  child: CircleAvatar(
+                    backgroundColor: kSmallButtonColor,
+                    radius: 30,
+                    child: IconButton(
+                        onPressed: () => print("Settings"),
+                        icon: Icon(Icons.settings),
+                        color: kMainButtonColor,
+                        iconSize: 25),
+                  )))
         ]),
         body: Column(children: [
           Container(
@@ -273,7 +280,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
             textAlign: TextAlign.center,
             // overflow: TextOverflow.ellipsis,
             // maxLines: 2,
-            style: const TextStyle(fontSize: 36),
+            style: const TextStyle(fontSize: 36, color: Color(0xff4f378b)),
           ),
         ],
       );
@@ -293,6 +300,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
             // maxLines: 2,
             style: const TextStyle(
               fontSize: 36,
+              color: Color(0xff4f378b),
             ),
           ),
           Container(
