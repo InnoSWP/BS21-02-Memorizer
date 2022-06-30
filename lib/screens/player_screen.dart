@@ -17,19 +17,20 @@ class PlayerScreen extends StatefulWidget {
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  final itemController = ItemScrollController();
+  // final itemController = ItemScrollController();
   int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
   FlutterTts flutterTts = FlutterTts();
 
-  void scrollToIndex(int index) => itemController.scrollTo(
-      index: index, duration: Duration(milliseconds: 500));
+  // void scrollToIndex(int index) => itemController.scrollTo(
+  //     index: index, duration: Duration(milliseconds: 500));
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final serverProvider = Provider.of<ServerProvider>(context);
     final lines = serverProvider.results;
+    final pageController = PageController();
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
@@ -104,6 +105,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
               child: PageView(
                 scrollDirection: Axis.vertical,
+                controller: pageController,
                 children: [
                   for (int i = 0; i < lines.length; i++)
                     listElementToScreen(lines, size, i)
@@ -170,7 +172,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             speakText(lines[_currentLine - 1]);
                             setState(() {
                               _currentLine--;
-                              scrollToIndex(_currentLine);
+                              pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
                             });
                           }
                         },
@@ -201,7 +203,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           speakText(lines[_currentLine + 1]);
                           setState(() {
                             _currentLine++;
-                            scrollToIndex(_currentLine);
+                            pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn)
                           });
                         }
                       },
