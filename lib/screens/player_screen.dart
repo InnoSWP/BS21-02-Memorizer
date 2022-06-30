@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memorizer_flutter/screens/player_settings_screen.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
 import 'package:memorizer_flutter/theme.dart';
@@ -14,8 +15,6 @@ class PlayerScreen extends StatefulWidget {
   @override
   State<PlayerScreen> createState() => _PlayerScreenState();
 }
-
-// enum TtsState { playing, stopped, paused, continued }
 
 class _PlayerScreenState extends State<PlayerScreen> {
   final itemController = ItemScrollController();
@@ -75,7 +74,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   onPressed: () => print("Voice commands"),
                   icon: Icon(Icons.mic_none),
                   color: Color(0xffeaddff),
-                  iconSize: 40)),
+                  iconSize: 30)),
           Padding(
               padding: const EdgeInsets.only(left: 0),
               child: Ink(
@@ -87,7 +86,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     backgroundColor: kSmallButtonColor,
                     radius: 30,
                     child: IconButton(
-                        onPressed: () => print("Settings"),
+                        onPressed: () => Navigator.of(context).pushNamed(PlayerSettingsScreen.routeName),
                         icon: Icon(Icons.settings),
                         color: kMainButtonColor,
                         iconSize: 25),
@@ -95,22 +94,21 @@ class _PlayerScreenState extends State<PlayerScreen> {
         ]),
         body: Column(children: [
           Container(
-            alignment: Alignment.center,
-            // ignore: todo
-            //TODO: Connect with the screen (precentages)
-            width: MediaQuery.of(context).size.width * 0.95,
-            height: MediaQuery.of(context).size.height * 0.63,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF6F2FA),
-              border: Border.all(color: const Color(0xFFF6F2FA)),
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-            ),
-            child: ScrollablePositionedList.builder(
-              itemCount: lines.length,
-              itemScrollController: itemController,
-              itemBuilder: (context, index) {
-                return listElementToScreen(lines, size, index);
-              },
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width * 0.95,
+              height: MediaQuery.of(context).size.height * 0.63,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF6F2FA),
+                border: Border.all(color: const Color(0xFFF6F2FA)),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              ),
+              child: PageView(
+                scrollDirection: Axis.vertical,
+                children: [
+                  for (int i = 0; i < lines.length; i++)
+                    listElementToScreen(lines, size, i)
+                ],
+              )
 
               // children: [
               //   for (int i = 0; i < lines.length; i++)
@@ -119,8 +117,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               //     height: size.height * 0.1,
               //   ),
               // ],
-            ),
-          ),
+              ),
 
           // child: SingleChildScrollView(
           //   child: Column(

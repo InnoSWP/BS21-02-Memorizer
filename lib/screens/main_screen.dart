@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memorizer_flutter/screens/main_settings_screen.dart';
 import 'package:memorizer_flutter/screens/player_screen.dart';
 import 'package:memorizer_flutter/server/pdf_parser.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
@@ -71,20 +72,21 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
         ),
         actions: [
           AnimatedOpacity(
-              duration: const Duration(milliseconds: 100),
-              opacity: _showBackButton ? 1.0 : 0.0,
-              child: IconButton(
-                onPressed: () {
-                  setState(() {
-                    _textController.text = '';
-                  });
-                },
-                icon: const Icon(
-                  Icons.close,
-                  color: kMainButtonColor,
-                  size: 30,
-                ),
-              )),
+            duration: const Duration(milliseconds: 100),
+            opacity: _showBackButton ? 1.0 : 0.0,
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  _textController.text = '';
+                });
+              },
+              icon: const Icon(
+                Icons.close,
+                color: kMainButtonColor,
+                size: 30,
+              ),
+            ),
+          ),
         ],
       ),
       backgroundColor: Colors.white,
@@ -199,7 +201,8 @@ class _MainScreenState extends State<MainScreen> with TickerProviderStateMixin {
                       backgroundColor: kSmallButtonColor,
                       radius: 30,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(MainSettingsScreen.routeName),
                         icon: const Icon(
                           Icons.settings,
                           color: kMainButtonColor,
