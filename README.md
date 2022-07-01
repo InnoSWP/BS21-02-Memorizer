@@ -4,6 +4,8 @@
 [![pub package](https://img.shields.io/pub/v/tts.svg)](https://pub.dev/packages/tts)
 [![pub package](https://img.shields.io/pub/v/provider.svg)](https://pub.dev/packages/provider)
 [![pub package](https://img.shields.io/pub/v/pdf_text.svg)](https://pub.dev/packages/pdf_text)
+[![pub package](https://img.shields.io/pub/v/scrollable_positioned_list.svg)](https://pub.dev/packages/scrollable_positioned_list)
+
 # Memorizer
 
 Memorize any text quickly and easily by voice!
