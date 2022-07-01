@@ -8,7 +8,11 @@
 
 # Memorizer
 
-Memorize any text quickly and easily by voice! Audio player and memorization helper. Application that can help you memorize text by listening. It can play a certain audio, stop, pause, repeat the sentence!
+Memorize any text quickly and easily by voice!
+- Audio player and memorization helper
+- Application that can help you memorize text by listening
+- It can play a certain audio, stop, pause, repeat the sentence
+- Upload your PDF file or input the text from keyboard
 
 ## Demo
 ### The Main screen
