@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/text_to_speech.svg)](https://pub.dev/packages/text_to_speech)
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
-[![pub package](https://img.shields.io/pub/v/flutter_test.svg)](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html)
+[![pub package](https://img.shields.io/pub/v/flutter/flutter_test.svg)](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html)
 
 # Memorizer
 
