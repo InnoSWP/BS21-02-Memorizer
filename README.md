@@ -1,8 +1,8 @@
-[![Build Status](https://codemagic.io/app/62b70379abf6619bf22152da/build.svg?branch=master)](https://codemagic.io/app/62b70379abf6619bf22152da/build/62bea43c9df8cb8868a5ba30)
+[![Build Status](https://codemagic.io/app/62b70379abf6619bf22152da/build/62bea43c9df8cb8868a5ba30.svg)](https://codemagic.io/app/62b70379abf6619bf22152da/build/62bea43c9df8cb8868a5ba30)
 
 [![pub package](https://img.shields.io/pub/v/text_to_speech.svg)](https://pub.dev/packages/text_to_speech)
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
-[![pub package](https://img.shields.io/pub/flutter/flutter_test/flutter_test-library.svg)](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html)
+[![pub package](https://img.shields.io/pub/v/flutter/flutter_test.svg)](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html)
 
 # Memorizer
 
