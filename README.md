@@ -28,7 +28,7 @@ Memorize any text quickly and easily by voice!
 | Buttons to pause/stop/repeat sentence         |     ✅     |
 | Settings to select number of repeats          |     ✅     |
 | Processing of voice commands                  |     ❌     |
-| Add new memorize technic                      |     ❌     |
+| Select the memorize technic                   |     ❌     |
 
 ## Getting Started
 1. Set up our app
