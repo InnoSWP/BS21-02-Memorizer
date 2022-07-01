@@ -13,12 +13,17 @@ Memorize any text quickly and easily by voice!
 ## How to use
 - to be provided later
 ## Features
-|      Features list       | supported   |
-|:-----------------:|:---------:|
-|      Upload PDF          |     ✅     |
-|      Enter the text      |     ✅     |
-|      Listen the text     |     ✅     |
-|      Repeat the sentance |     ✅     |
+| Feature                                       | Supported | 
+|-----------------------------------------------|:---------:|
+| Input text for memorize                       |     ✅     |
+| Upload pdf for memorize                       |     ✅     |
+| Highlight current sentence                    |     ✅     |
+| Add buttons to go to previous/next sentence   |     ✅     |
+| Add buttons to pause/stop/repeat sentence     |     ✅     |
+| Settings to select number of repeats          |     ✅     |
+| Processing of voice commands                  |     ❌     |
+| Add new memorize technic                      |     ❌     |
+
 ## Getting Started
 1. Set up our app
 2. Enter the text or upload PDF
