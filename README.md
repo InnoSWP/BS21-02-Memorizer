@@ -2,7 +2,7 @@
 
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
 [![pub package](https://img.shields.io/pub/v/tts.svg)](https://pub.dev/packages/tts)
-
+[![pub package](https://img.shields.io/pub/v/provider.svg)](https://pub.dev/packages/provider)
 # Memorizer
 
 Memorize any text quickly and easily by voice!
