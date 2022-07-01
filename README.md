@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/fizruk/telegram-bot-simple.svg?branch=master)](https://codemagic.io/app/62b70379abf6619bf22152da/build/62bea43c9df8cb8868a5ba30)
+[![Codemagic build status](https://api.codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/status_badge.svg)](https://codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/latest_build)
 
 [![pub package](https://img.shields.io/pub/v/text_to_speech.svg)](https://pub.dev/packages/text_to_speech)
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
