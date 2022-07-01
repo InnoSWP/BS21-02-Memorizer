@@ -18,8 +18,8 @@ Memorize any text quickly and easily by voice!
 | Input text for memorize                       |     ✅     |
 | Upload pdf for memorize                       |     ✅     |
 | Highlight current sentence                    |     ✅     |
-| Add buttons to go to previous/next sentence   |     ✅     |
-| Add buttons to pause/stop/repeat sentence     |     ✅     |
+| Buttons to go to previous/next sentence       |     ✅     |
+| Buttons to pause/stop/repeat sentence         |     ✅     |
 | Settings to select number of repeats          |     ✅     |
 | Processing of voice commands                  |     ❌     |
 | Add new memorize technic                      |     ❌     |
