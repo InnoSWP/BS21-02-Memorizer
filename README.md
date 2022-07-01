@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/fizruk/telegram-bot-simple.svg?branch=master)](https://codemagic.io/app/62b70379abf6619bf22152da/build/62bea43c9df8cb8868a5ba30)
 # Memorizer
 
 Memorize any text quickly and easily by voice!
