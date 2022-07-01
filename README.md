@@ -1,7 +1,7 @@
 [![Codemagic build status](https://api.codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/status_badge.svg)](https://codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/latest_build)
 
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
-[![pub package](https://img.shields.io/pub/v/text_to_speech.svg)](https://pub.dev/packages/text_to_speech)
+[![pub package](https://img.shields.io/pub/v/tts.svg)](https://pub.dev/packages/tts)
 
 # Memorizer
 
