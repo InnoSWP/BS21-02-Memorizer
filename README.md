@@ -46,7 +46,7 @@
 4. Enjoy
 
 ## Technologies used
-- <a href="https://dart.dev">Flutter</a>
+- <a href="https://dart.dev">Dart</a>
 - <a href="https://flutter.dev">Flutter</a>
 - mock API that parse text by sentences 
 
