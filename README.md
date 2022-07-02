@@ -1,5 +1,5 @@
 
-<h1 align="center"> Memorizer "iExtract"</h1>
+<h1 align="center"> Memorizer </h1>
 
 [![Codemagic build status](https://api.codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/status_badge.svg)](https://codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/latest_build)
 
