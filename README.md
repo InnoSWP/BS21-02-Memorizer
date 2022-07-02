@@ -46,8 +46,9 @@
 4. Enjoy
 
 ## Technologies used
-
+- <a href="https://dart.dev">Flutter</a>
 - <a href="https://flutter.dev">Flutter</a>
+- mock API that parse text by sentences 
 
 ## License
 This project uses [MIT License](./LICENSE.md)
