@@ -43,3 +43,6 @@
 2. Enter the text or upload PDF
 3. Start memorize
 4. Enjoy
+
+## License
+This project uses [MIT License](./LICENSE.md)
