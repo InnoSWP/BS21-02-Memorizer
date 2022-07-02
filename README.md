@@ -1,3 +1,6 @@
+
+<h1 align="center"> Memorizer "iExtract"</h1>
+
 [![Codemagic build status](https://api.codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/status_badge.svg)](https://codemagic.io/apps/62b70379abf6619bf22152da/62b70379abf6619bf22152d9/latest_build)
 
 [![pub package](https://img.shields.io/pub/v/material.svg)](https://pub.dartlang.org/packages/material)
@@ -5,8 +8,6 @@
 [![pub package](https://img.shields.io/pub/v/provider.svg)](https://pub.dev/packages/provider)
 [![pub package](https://img.shields.io/pub/v/pdf_text.svg)](https://pub.dev/packages/pdf_text)
 [![pub package](https://img.shields.io/pub/v/scrollable_positioned_list.svg)](https://pub.dev/packages/scrollable_positioned_list)
-
-<h1 align="center"> Memorizer "iExtract"</h1>
 
 **Memorize any text quickly and easily by voice!**
 - Audio player and memorization helper
