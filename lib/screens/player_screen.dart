@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/screens/player_settings_screen.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
-import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
 class PlayerScreen extends StatefulWidget {
@@ -172,7 +170,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             speakText(lines[_currentLine - 1]);
                             setState(() {
                               _currentLine--;
-                              pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
+                              pageController.previousPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
                             });
                           }
                         },
@@ -203,7 +201,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           speakText(lines[_currentLine + 1]);
                           setState(() {
                             _currentLine++;
-                            pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn)
+                            pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
                           });
                         }
                       },
@@ -267,51 +265,49 @@ class _PlayerScreenState extends State<PlayerScreen> {
     //     ),
     //   ),
     // );
-    var el;
-    if (index != list.length - 1) {
-      el = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-          Text(
+    // var el;
+    // if (index != list.length - 1) {
+    //   el = Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    return Center(child: Text(
             list[index], // add text from the array,
             textAlign: TextAlign.center,
             // overflow: TextOverflow.ellipsis,
             // maxLines: 2,
             style: const TextStyle(fontSize: 36, color: Color(0xff4f378b)),
-          ),
-        ],
-      );
+          ));
       //print(list[index]);
       //speakText(list[index]);
-    } else {
-      el = Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-          Text(
-            list[index], // add text from the array,
-            textAlign: TextAlign.center,
-            // overflow: TextOverflow.ellipsis,
-            // maxLines: 2,
-            style: const TextStyle(
-              fontSize: 36,
-              color: Color(0xff4f378b),
-            ),
-          ),
-          Container(
-            height: sizeOfScreen.height * 0.25,
-          ),
-        ],
-      );
-      //print(list[index]);
-      //speakText(list[index]);
-    }
-    return el;
+    // } else {
+    //   el = Column(
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    //       Text(
+    //         list[index], // add text from the array,
+    //         textAlign: TextAlign.center,
+    //         // overflow: TextOverflow.ellipsis,
+    //         // maxLines: 2,
+    //         style: const TextStyle(
+    //           fontSize: 36,
+    //           color: Color(0xff4f378b),
+    //         ),
+    //       ),
+    //       Container(
+    //         height: sizeOfScreen.height * 0.25,
+    //       ),
+    //     ],
+    //   );
+    //   //print(list[index]);
+    //   //speakText(list[index]);
+    // }
+    // return el;
   }
 
   Future speakText(var text) async {
