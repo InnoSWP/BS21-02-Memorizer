@@ -38,11 +38,15 @@
 | Processing of voice commands                  |     ❌     |
 | Select the memorize technic                   |     ❌     |
 
-## Getting Started
+## Project Installation
 1. Set up our app
 2. Enter the text or upload PDF
 3. Start memorize
 4. Enjoy
+
+## Frameworks or technologies used
+![](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
 
 ## License
 This project uses [MIT License](./LICENSE.md)
