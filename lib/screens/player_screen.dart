@@ -130,8 +130,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               //     height: size.height * 0.1,
               //   ),
               // ],
-            ),
-          ),
+              ),
 
           // child: SingleChildScrollView(
           //   child: Column(
@@ -187,7 +186,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                             }
                             setState(() {
                               _currentLine--;
-                              pageController.previousPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
+                              pageController.previousPage(
+                                  duration: Duration(milliseconds: 800),
+                                  curve: Curves.easeIn);
                             });
                           }
                         },
@@ -223,7 +224,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
                           }
                           setState(() {
                             _currentLine++;
-                            pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
+                            pageController.nextPage(
+                                duration: Duration(milliseconds: 800),
+                                curve: Curves.easeIn);
                           });
                         }
                       },
@@ -232,45 +235,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       iconSize: 50)
                 ],
               )),
-          // Padding(
-          //     padding: const EdgeInsets.only(top: 20),
-          //     child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //         children: [
-          //           Ink(
-          //               decoration: const ShapeDecoration(
-          //                 color: Color(0xffeaddff),
-          //                 shape: CircleBorder(),
-          //               ),
-          //               child: IconButton(
-          //                   onPressed: () => print("repeat"),
-          //                   icon: Icon(Icons.repeat),
-          //                   color: Color(0xff6750a4),
-          //                   iconSize: 30)),
-          //           Ink(
-          //               decoration: const ShapeDecoration(
-          //                 color: Color(0xff6750a4),
-          //                 shape: CircleBorder(),
-          //               ),
-          //               child: IconButton(
-          //                   onPressed: () => print("Voice commands"),
-          //                   icon: Icon(Icons.mic_none),
-          //                   color: Color(0xffeaddff),
-          //                   iconSize: 40)),
-          //           Padding(
-          //               padding: const EdgeInsets.only(left: 0),
-          //               child: Ink(
-          //                 decoration: const ShapeDecoration(
-          //                   color: Color(0xffeaddff),
-          //                   shape: CircleBorder(),
-          //                 ),
-          //                 child: IconButton(
-          //                     onPressed: () => print("Settings"),
-          //                     icon: Icon(Icons.settings),
-          //                     color: Color(0xff4f378b),
-          //                     iconSize: 30),
-          //               ))
-          //         ]))
         ]));
   }
 
@@ -295,15 +259,16 @@ class _PlayerScreenState extends State<PlayerScreen> {
     //       Container(
     //         height: sizeOfScreen.height * 0.25,
     //       ),
-    return Center(child: Text(
-            list[index], // add text from the array,
-            textAlign: TextAlign.center,
-            // overflow: TextOverflow.ellipsis,
-            // maxLines: 2,
-            style: const TextStyle(fontSize: 36, color: Color(0xff4f378b)),
-          ));
-      //print(list[index]);
-      //speakText(list[index]);
+    return Center(
+        child: Text(
+      list[index], // add text from the array,
+      textAlign: TextAlign.center,
+      // overflow: TextOverflow.ellipsis,
+      // maxLines: 2,
+      style: const TextStyle(fontSize: 36, color: Color(0xff4f378b)),
+    ));
+    //print(list[index]);
+    //speakText(list[index]);
     // } else {
     //   el = Column(
     //     mainAxisSize: MainAxisSize.min,
