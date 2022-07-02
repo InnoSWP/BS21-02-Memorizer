@@ -22,6 +22,10 @@ class SettingsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Settings getSettings() {
+    return _settings;
+  }
+
   Settings get settings => settings;
 }
 

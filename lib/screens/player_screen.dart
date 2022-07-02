@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memorizer_flutter/screens/player_settings_screen.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
+import 'package:memorizer_flutter/providers/settings_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -19,6 +20,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
   int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
   FlutterTts flutterTts = FlutterTts();
+  bool onPause = true;
+  //SettingsProvider settingsProvider = SettingsProvider();
+  //int repetitions = settingsProvider.settings.repetitions;
 
   // void scrollToIndex(int index) => itemController.scrollTo(
   //     index: index, duration: Duration(milliseconds: 500));
@@ -27,6 +31,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final serverProvider = Provider.of<ServerProvider>(context);
+    final settingsProvider = Provider.of<SettingsProvider>(context);
+    //int reps = settingsProvider.settings.repetitions;
+    Settings settings = settingsProvider.getSettings();
+    int reps = settings.repetitions;
     final lines = serverProvider.results;
     final pageController = PageController();
     // TODO: implement build
@@ -58,8 +66,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   child: IconButton(
                       onPressed: () {
                         print("repeat");
-                        stopText();
-                        speakText(lines[_currentLine]);
+                        if (!onPause) {
+                          stopText();
+                          speakText(lines[_currentLine], settings);
+                        }
                       },
                       icon: Icon(Icons.repeat),
                       color: Color(0xff6750a4),
@@ -70,10 +80,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 shape: CircleBorder(),
               ),
               child: IconButton(
-                  onPressed: () => print("Voice commands"),
+                  onPressed: () {
+                    print("Voice commands");
+                    // print(await flutterTts.getVoices);
+                  },
                   icon: Icon(Icons.mic_none),
                   color: Color(0xffeaddff),
-                  iconSize: 30)),
+                  iconSize: 40)),
           Padding(
               padding: const EdgeInsets.only(left: 0),
               child: Ink(
@@ -85,7 +98,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     backgroundColor: kSmallButtonColor,
                     radius: 30,
                     child: IconButton(
-                        onPressed: () => Navigator.of(context).pushNamed(PlayerSettingsScreen.routeName),
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(PlayerSettingsScreen.routeName),
                         icon: Icon(Icons.settings),
                         color: kMainButtonColor,
                         iconSize: 25),
@@ -109,7 +123,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     listElementToScreen(lines, size, i)
                 ],
               )
-
               // children: [
               //   for (int i = 0; i < lines.length; i++)
               //     listElementToScreen(lines, size, i),
@@ -117,7 +130,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
               //     height: size.height * 0.1,
               //   ),
               // ],
-              ),
+            ),
+          ),
 
           // child: SingleChildScrollView(
           //   child: Column(
@@ -167,7 +181,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         // ignore: avoid_print
                         onPressed: () {
                           if (_currentLine >= 1) {
-                            speakText(lines[_currentLine - 1]);
+                            if (!onPause) {
+                              stopText();
+                              speakText(lines[_currentLine - 1], settings);
+                            }
                             setState(() {
                               _currentLine--;
                               pageController.previousPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
@@ -181,10 +198,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   IconButton(
                       // ignore: avoid_print
                       onPressed: (() {
+                        onPause = !onPause;
                         setState(() {
                           if (iconMain.icon == Icons.play_arrow) {
                             iconMain = Icon(Icons.pause);
-                            speakText(lines[_currentLine]);
+                            stopText();
+                            speakText(lines[_currentLine], settings);
                           } else {
                             iconMain = Icon(Icons.play_arrow);
                             stopText();
@@ -198,7 +217,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       // ignore: avoid_print
                       onPressed: () {
                         if (_currentLine < lines.length - 1) {
-                          speakText(lines[_currentLine + 1]);
+                          if (!onPause) {
+                            stopText();
+                            speakText(lines[_currentLine + 1], settings);
+                          }
                           setState(() {
                             _currentLine++;
                             pageController.nextPage(duration: Duration(milliseconds: 800), curve: Curves.easeIn);
@@ -310,8 +332,22 @@ class _PlayerScreenState extends State<PlayerScreen> {
     // return el;
   }
 
-  Future speakText(var text) async {
-    await flutterTts.speak(text);
+  Future speakText(var text, Settings setts) async {
+    int reps = setts.repetitions;
+    var vol = setts.volume;
+    var speed = setts.speed;
+    print("vol" + vol.toString());
+    print("speed" + speed.toString());
+    await flutterTts.setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
+    //await flutterTts.setSpeechRate(speed - 0.5);
+    //await flutterTts.setVolume(vol);
+    await flutterTts.setQueueMode(1);
+    print(reps);
+    for (int i = 0; i < reps; i++) {
+      await flutterTts.speak(text);
+    }
+    //await flutterTts.speak(text);
+    //await flutterTts.speak(text);
   }
 
   Future stopText() async {
