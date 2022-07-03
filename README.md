@@ -1,16 +1,26 @@
-# memorizer_flutter
+# Memorizer
 
-A new Flutter project.
+Memorize any text quickly and easily by voice!
 
+## Demo
+### The Main screen
+
+<a href="https://ibb.co/Sx54wJp"><img src="https://i.ibb.co/W3G4vs1/image.png" alt="image" width="30%"></a>
+<a href="https://ibb.co/B22CPpx"><img src="https://i.ibb.co/HTTH2Ss/image.png" alt="image" width="30%"></a>
+
+### The Player screen
+<a href="https://ibb.co/19CNsZY"><img src="https://i.ibb.co/2jzr8q0/image.png" alt="image" width="30%"></a>
+## How to use
+- to be provided later
+## Features
+|      Features list       | supported   |
+|:-----------------:|:---------:|
+|      Upload PDF          |     ✅     |
+|      Enter the text      |     ✅     |
+|      Listen the text     |     ✅     |
+|      Repeat the sentance |     ✅     |
 ## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Set up our app
+2. Enter the text or upload PDF
+3. Start memorize
+4. Enjoy
