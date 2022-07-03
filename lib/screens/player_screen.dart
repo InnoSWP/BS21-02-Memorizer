@@ -3,9 +3,11 @@ import 'package:memorizer_flutter/screens/player_settings_screen.dart';
 import 'package:memorizer_flutter/server/server_provider.dart';
 import 'package:memorizer_flutter/providers/settings_provider.dart';
 import 'package:memorizer_flutter/theme.dart';
+import 'package:picovoice_flutter/picovoice_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:memorizer_flutter/voiceCommands/voice_manager.dart';
+import 'package:picovoice_flutter/picovoice_error.dart';
+import 'package:rhino_flutter/rhino.dart';
 
 class PlayerScreen extends StatefulWidget {
   static const routeName = "/playerscreen";
@@ -24,11 +26,11 @@ class _PlayerScreenState extends State<PlayerScreen> {
   bool onPause = true;
   bool _playbackOn = false;
   final pageController = PageController();
-  //SettingsProvider settingsProvider = SettingsProvider();
-  //int repetitions = settingsProvider.settings.repetitions;
-
-  // void scrollToIndex(int index) => itemController.scrollTo(
-  //     index: index, duration: Duration(milliseconds: 500));
+  PicovoiceManager? picovoiceManager;
+  bool listeningForCommand = false;
+  String? command;
+  Settings settings = Settings(1, 1, 1);
+  var lines = [];
 
   void _playText(lines, settings) async {
     String text = lines[_currentLine];
@@ -38,8 +40,6 @@ class _PlayerScreenState extends State<PlayerScreen> {
     print("vol" + vol.toString());
     print("speed" + speed.toString());
     await flutterTts.setVoice({"name": "en-us-x-tpf-local", "locale": "en-US"});
-    //await flutterTts.setSpeechRate(speed - 0.5);
-    //await flutterTts.setVolume(vol);
     await flutterTts.setQueueMode(1);
     print(reps);
     for (int i = 0; i < reps; i++) {
@@ -56,15 +56,79 @@ class _PlayerScreenState extends State<PlayerScreen> {
     });
   }
 
+  void initPicovoice() async {
+    String contextAsset = "assets\\Memorizer_en_android_v2_1_0.rhn";
+    //String contextPath = await _extractAsset(contextAsset);
+    String keywordAsset = "assets\\hey-Memorizer_en_android_v2_1_0.ppn";
+    //String keywordPath = await _extractAsset(keywordAsset);
+    String accessKey =
+        "4CnkZqb8+dM7hDpoc4VVxgXnkDcgnYKvPuu0/OIfQLn3ogrpVwFycQ==";
+
+    try {
+      picovoiceManager = await PicovoiceManager.create(accessKey, keywordAsset,
+          wakeWordCallback, contextAsset, inferenceCallback,
+          processErrorCallback: processErrorCallback);
+      print("activate voice manager");
+      await picovoiceManager!.start();
+      print(picovoiceManager);
+    } on PicovoiceInvalidArgumentException catch (ex) {
+      processErrorCallback(PicovoiceInvalidArgumentException(
+          "${ex.message}\nEnsure your accessKey '$accessKey' is a valid access key."));
+    } on PicovoiceActivationException {
+      processErrorCallback(
+          PicovoiceActivationException("AccessKey activation error."));
+    } on PicovoiceActivationLimitException {
+      processErrorCallback(PicovoiceActivationLimitException(
+          "AccessKey reached its device limit."));
+    } on PicovoiceActivationRefusedException {
+      processErrorCallback(
+          PicovoiceActivationRefusedException("AccessKey refused."));
+    } on PicovoiceActivationThrottledException {
+      processErrorCallback(PicovoiceActivationThrottledException(
+          "AccessKey has been throttled."));
+    } on PicovoiceException catch (ex) {
+      processErrorCallback(ex);
+    }
+  }
+
+  void wakeWordCallback() {
+    print("wake word detected!");
+    listeningForCommand = true;
+  }
+
+  inferenceCallback(RhinoInference inference) {
+    print(inference.intent);
+    if (inference.isUnderstood!) {
+      listeningForCommand = false;
+      command = inference.intent;
+      print(command);
+      switch (command) {
+        case "play":
+          stopText();
+          print(lines);
+          _playText(lines[_currentLine], settings);
+          break;
+        case "pause":
+          stopText();
+          break;
+      }
+    }
+    //_listeningForCommand = false;
+  }
+
+  void processErrorCallback(PicovoiceException error) {
+    print(error.message);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final serverProvider = Provider.of<ServerProvider>(context);
     final settingsProvider = Provider.of<SettingsProvider>(context);
     //int reps = settingsProvider.settings.repetitions;
-    Settings settings = settingsProvider.getSettings();
+    settings = settingsProvider.getSettings();
     int reps = settings.repetitions;
-    final lines = serverProvider.results;
+    lines = serverProvider.results;
     if (_playbackOn) {
       _playText(lines, settings);
     }
@@ -113,7 +177,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
               ),
               child: IconButton(
                   onPressed: () {
-                    print("Voice commands");
+                    listeningForCommand = !listeningForCommand;
+                    if (listeningForCommand) {
+                      initPicovoice();
+                      print("Voice commands");
+                    } else {
+                      picovoiceManager!.stop();
+                    }
+
                     // print(await flutterTts.getVoices);
                   },
                   icon: Icon(Icons.mic_none),
@@ -173,7 +244,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         if (_currentLine >= 1) {
                           if (!onPause) {
                             stopText();
-                            speakText(lines[_currentLine - 1], settings);
+                            speakText(lines[_currentLine - 1], settings); // -1
                           }
                           setState(() {
                             _currentLine--;
@@ -283,7 +354,8 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       if (_currentLine < lines.length - 1) {
                         if (!onPause) {
                           stopText();
-                          speakText(lines[_currentLine + 1], settings);
+                          speakText(
+                              lines[_currentLine + 1], settings); // speakText
                         }
                         setState(() {
                           _currentLine++;
