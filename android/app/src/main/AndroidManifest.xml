@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.memorizer_flutter">
+    <uses-permission android:name="android.premission.INTERNET" />
    <application
-        android:label="memorizer_flutter"
+        android:label="Memorizer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

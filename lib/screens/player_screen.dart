@@ -162,7 +162,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Padding(
                   padding: EdgeInsets.only(right: 0),
@@ -187,6 +187,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       iconSize: 50),
                 ),
                 IconButton(
+                    padding: EdgeInsets.only(right: 3),
                     // ignore: avoid_print
                     onPressed: (() async {
                       onPause = !onPause;
