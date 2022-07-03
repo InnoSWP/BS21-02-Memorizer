@@ -71,6 +71,7 @@ flutter:
   assets:
     - assets\Memorizer_en_android_v2_1_0.rhn
     - assets\hey-Memorizer_en_android_v2_1_0.ppn
+    - assets\Hey-Memo_en_android_v2_1_0.ppn
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
