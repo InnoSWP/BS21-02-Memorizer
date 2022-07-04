@@ -49,6 +49,14 @@
 5. Push again to turn it off
 6. Enjoy
 
+## Voice commands
+- Hey Memo (wake word)
+- play
+- pause/stop
+- previous
+- next
+- repeat
+
 ## Technologies used
 - <a href="https://dart.dev">Dart</a>
 - <a href="https://flutter.dev">Flutter</a>
