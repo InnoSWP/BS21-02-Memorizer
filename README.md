@@ -26,7 +26,8 @@
 ### The Player screen
 <a href="https://ibb.co/19CNsZY"><img src="https://i.ibb.co/2jzr8q0/image.png" alt="image" width="30%"></a>
 ## Project Installation
-Download <a href="https://drive.google.com/drive/folders/1aYpcaFdpwH65w-DERY6558QM9eBNA9Hp">APK</a>
+Download <a href="https://drive.google.com/file/d/1zVJtR-P4xkQHNfweP3ym3q1-UM-eOhne/view">APK</a>
+or
 1. Open the Flutter app
 2. Clone the repository
 3. You are ready!
