@@ -46,7 +46,7 @@
 2. Enter the text or upload PDF
 3. Start memorize
 4. Push mice to activate voice mode
-5. push again to turn it off
+5. Push again to turn it off
 6. Enjoy
 
 ## Technologies used
