@@ -25,7 +25,7 @@
 
 ### The Player screen
 <a href="https://ibb.co/19CNsZY"><img src="https://i.ibb.co/2jzr8q0/image.png" alt="image" width="30%"></a>
-## How to use
+## Project Installation
 1. Open the Flutter app
 2. Clone the repository
 3. You are ready!
@@ -41,11 +41,13 @@
 | Processing of voice commands                  |     ✅     |
 | Select the memorize technic                   |     ❌     |
 
-## Project Installation
+## How to use
 1. Set up our app
 2. Enter the text or upload PDF
 3. Start memorize
-4. Enjoy
+4. Push mice to activate voice mode
+5. push again to turn it off
+6. Enjoy
 
 ## Technologies used
 - <a href="https://dart.dev">Dart</a>
