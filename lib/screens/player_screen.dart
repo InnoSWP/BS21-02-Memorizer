@@ -181,25 +181,29 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 color: Color(0xff6750a4),
                 shape: CircleBorder(),
               ),
-              child: IconButton(
-                  onPressed: () {
-                    listeningForCommand = !listeningForCommand;
-                    if (listeningForCommand) {
-                      initPicovoice();
-                      setState(() {
-                        iconMicro = Icon(Icons.mic_none);
-                      });
-                      print("Voice commands");
-                    } else {
-                      setState(() {
-                        iconMicro = Icon(Icons.mic_off);
-                      });
-                      picovoiceManager!.stop();
-                    }
-                  },
-                  icon: iconMicro,
-                  color: Color(0xffeaddff),
-                  iconSize: 40)),
+              child: CircleAvatar(
+                backgroundColor: kSmallButtonColor,
+                radius: 30,
+                child: IconButton(
+                    onPressed: () {
+                      listeningForCommand = !listeningForCommand;
+                      if (listeningForCommand) {
+                        initPicovoice();
+                        setState(() {
+                          iconMicro = Icon(Icons.mic_none);
+                        });
+                        print("Voice commands");
+                      } else {
+                        setState(() {
+                          iconMicro = Icon(Icons.mic_off);
+                        });
+                        picovoiceManager!.stop();
+                      }
+                    },
+                    icon: iconMicro,
+                    color: kMainButtonColor,
+                    iconSize: 25),
+              )),
           Padding(
             padding: const EdgeInsets.only(left: 0),
             child: Ink(
