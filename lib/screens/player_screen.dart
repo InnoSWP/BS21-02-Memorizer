@@ -21,7 +21,7 @@ class PlayerScreen extends StatefulWidget {
 class _PlayerScreenState extends State<PlayerScreen> {
   int _currentLine = 0;
   Icon iconMain = const Icon(Icons.play_arrow);
-  Icon iconMicro = const Icon(Icons.mic_none);
+  Icon iconMicro = const Icon(Icons.mic_off);
   FlutterTts flutterTts = FlutterTts();
   bool onPause = true;
   bool _playbackOn = false;
@@ -30,6 +30,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
   bool listeningForCommand = false;
   String? command;
   Settings settings = Settings(1, 1, 1);
+  bool wakeWord = false;
   var lines = [];
 
   void _playText(lines, settings) async {
@@ -60,7 +61,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
     String keywordAsset = "assets\\Hey-Memo_en_android_v2_1_0.ppn";
     String accessKey =
         "4CnkZqb8+dM7hDpoc4VVxgXnkDcgnYKvPuu0/OIfQLn3ogrpVwFycQ==";
-
+    wakeWord = false;
     try {
       picovoiceManager = await PicovoiceManager.create(accessKey, keywordAsset,
           wakeWordCallback, contextAsset, inferenceCallback,
@@ -89,13 +90,15 @@ class _PlayerScreenState extends State<PlayerScreen> {
   }
 
   void wakeWordCallback() {
+    stopText();
+    wakeWord = true;
     print("wake word detected!");
   }
 
   inferenceCallback(RhinoInference inference) {
     print(inference.intent);
     if (inference.isUnderstood!) {
-      listeningForCommand = false;
+      //listeningForCommand = false;
       command = inference.intent;
       print(command);
       switch (command) {
@@ -134,6 +137,9 @@ class _PlayerScreenState extends State<PlayerScreen> {
       stopText();
       _playText(lines, settings);
     }
+    // if (wakeWord) {
+    //   showToast(context);
+    // }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -181,12 +187,12 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     if (listeningForCommand) {
                       initPicovoice();
                       setState(() {
-                        iconMicro = Icon(Icons.mic_off);
+                        iconMicro = Icon(Icons.mic_none);
                       });
                       print("Voice commands");
                     } else {
                       setState(() {
-                        iconMicro = Icon(Icons.mic_none);
+                        iconMicro = Icon(Icons.mic_off);
                       });
                       picovoiceManager!.stop();
                     }
@@ -341,5 +347,10 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   Future stopText() async {
     await flutterTts.stop();
+  }
+
+  void showToast(BuildContext context) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(SnackBar(content: const Text("Say command")));
   }
 }
